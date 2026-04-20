@@ -68,4 +68,4 @@ const userSchema: Schema<User> = new Schema({
 })
 
 // here I am checking if the model is already created or we have to newly create it. Also have wrote the typescript for the following Code
-export const User = mongoose.models.User as mongoose.Model<User> || mongoose.model<User>("User", userSchema)
+export const UserModel = mongoose.models.User as mongoose.Model<User> || mongoose.model<User>("User", userSchema)
