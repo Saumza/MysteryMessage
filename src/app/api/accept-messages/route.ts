@@ -2,6 +2,8 @@ import { authOptions } from "../auth/[...nextauth]/option";
 import { UserModel } from "@/models/user.model";
 import { getServerSession, User } from "next-auth"
 import { connectDB } from "@/lib/dbConnect";
+import { z } from "zod";
+import { acceptingMessageSchema } from "@/SchemaValidations/user.validation";
 
 
 export async function POST(req: Request) {
@@ -18,14 +20,28 @@ export async function POST(req: Request) {
             })
     }
     const user: User = session?.user as User
-    const { acceptMessages } = await req.json()
     const userId = user._id
 
     try {
+        const { acceptMessage } = await req.json()
+
+        const acceptMessageSchemaQuery = {
+            acceptMessage
+        }
+
+        const result = acceptingMessageSchema.safeParse(acceptMessageSchemaQuery)
+        if (!result.success) {
+            const codeError = z.treeifyError(result.error)
+            return Response.json({
+                success: false,
+                message: codeError.properties?.acceptMessage?.errors || "Invalid Code Format"
+            }, { status: 400 })
+        }
+        
         const updateUserMessageAcceptance = await UserModel.findByIdAndUpdate(
             userId,
             {
-                isAcceptingMessage: acceptMessages
+                isAcceptingMessage: acceptMessage
             },
             { new: true }
         )

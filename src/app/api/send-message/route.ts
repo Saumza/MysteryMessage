@@ -1,12 +1,28 @@
 import { connectDB } from "@/lib/dbConnect";
 import { UserModel } from "@/models/user.model";
 import { Message } from "@/models/user.model"
+import { messageSchemaValidation } from "@/SchemaValidations/user.validation";
+import { z } from "zod";
 
 export async function POST(req: Request) {
     await connectDB()
 
-    const { username, content } = await req.json()
     try {
+        const { username, content } = await req.json()
+
+        const contentQuerySchema = {
+            content
+        }
+
+        const result = messageSchemaValidation.safeParse(contentQuerySchema)
+        if (!result.success) {
+            const codeError = z.treeifyError(result.error)
+            return Response.json({
+                success: false,
+                message: codeError.properties?.content?.errors || "Invalid Code Format"
+            }, { status: 400 })
+        }
+
         const user = await UserModel.findOne({ username })
         if (!user) {
             return Response.json({
