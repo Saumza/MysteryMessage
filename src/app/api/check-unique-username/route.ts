@@ -22,7 +22,7 @@ export async function GET(request: Request) {
             const usernameError = z.treeifyError(result.error)
             return Response.json({
                 success: false,
-                message: usernameError.properties?.username?.errors || "Username Must Follow Format"
+                message: usernameError.properties?.username?.errors[0] || "Username Must Follow Format"
             }, { status: 400 })
         }
 
