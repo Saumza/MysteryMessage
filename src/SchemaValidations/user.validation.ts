@@ -12,7 +12,7 @@ export const signUpValidation = z.object({
 })
 
 export const signInValidation = z.object({
-    email: z.string(),
+    identifier: z.string(),
     password: z.string()
 })
 

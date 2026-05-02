@@ -37,6 +37,7 @@ export async function POST(request: Request) {
         }
 
         user.isVerified = true
+        user.verifyCode=""
         await user.save()
 
         return Response.json({
