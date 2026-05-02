@@ -10,7 +10,6 @@ import { useRouter } from "next/navigation"
 import Link from "next/link"
 import axios, { AxiosError } from "axios"
 import { APIResponse } from "@/types/APIResponse"
-import { error } from "console"
 import { toast } from "sonner"
 import { Field, FieldError, FieldGroup, FieldLabel } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
@@ -63,7 +62,7 @@ function page() {
                 description: response.data?.message
             })
             setIsSubmitting(false)
-            router.replace(`/verify-code/${username}`)
+            router.replace(`/verify/${username}`)
         } catch (error) {
             const axiosError = error as AxiosError<APIResponse>
             const errorMessage = axiosError.response?.data.message
@@ -78,10 +77,10 @@ function page() {
         <div className="flex justify-center items-center min-h-screen bg-gray-800">
             <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md">
                 <div className="text-center">
-                    <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-6">
+                    <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-6 font-outfit">
                         Join Mystry Feedback
                     </h1>
-                    <p className="mb-4">Sign up to start your anonymous adventure</p>
+                    <p className="mb-4 font-outfit">Sign up to start your anonymous adventure</p>
                 </div>
                 <form onSubmit={form.handleSubmit(onSubmit)}>
                     <FieldGroup>
@@ -90,7 +89,7 @@ function page() {
                             control={form.control}
                             render={({ field, fieldState }) => (
                                 <Field data-invalid={fieldState.invalid}>
-                                    <FieldLabel htmlFor="form-rhf-demo-title">
+                                    <FieldLabel htmlFor="form-rhf-demo-title" className="font-outfit">
                                         Username
                                     </FieldLabel>
                                     <Input
@@ -102,10 +101,11 @@ function page() {
                                         aria-invalid={!usernameSuccess}
                                         placeholder="Enter your Username"
                                         type="text"
+                                        className="font-outfit"
                                     />
                                     {!usernameSuccess ? (
-                                        <FieldError errors={[{ message: usernameError }]} />
-                                    ) : <p className='text-green-500' >
+                                        <FieldError className="font-outfit" errors={[{ message: usernameError }]} />
+                                    ) : <p className='text-green-500 font-outfit' >
                                         {usernameError}
                                     </p>}
                                 </Field>
@@ -116,7 +116,7 @@ function page() {
                             control={form.control}
                             render={({ field, fieldState }) => (
                                 <Field data-invalid={fieldState.invalid}>
-                                    <FieldLabel htmlFor="form-rhf-demo-title">
+                                    <FieldLabel htmlFor="form-rhf-demo-title" className="font-outfit">
                                         Email
                                     </FieldLabel>
                                     <Input
@@ -124,9 +124,10 @@ function page() {
                                         aria-invalid={fieldState.invalid}
                                         placeholder="Enter your Email"
                                         type="email"
+                                        className="font-outfit"
                                     />
                                     {fieldState.invalid && (
-                                        <FieldError errors={[fieldState.error]} />
+                                        <FieldError className="font-outfit" errors={[fieldState.error]} />
                                     )}
                                 </Field>
                             )}
@@ -136,7 +137,7 @@ function page() {
                             control={form.control}
                             render={({ field, fieldState }) => (
                                 <Field data-invalid={fieldState.invalid}>
-                                    <FieldLabel htmlFor="form-rhf-demo-title">
+                                    <FieldLabel htmlFor="form-rhf-demo-title" className="font-outfit">
                                         Password
                                     </FieldLabel>
                                     <Input
@@ -144,14 +145,15 @@ function page() {
                                         aria-invalid={fieldState.invalid}
                                         placeholder="Enter your Password"
                                         type="password"
+                                        className="font-outfit"
                                     />
                                     {fieldState.invalid && (
-                                        <FieldError errors={[fieldState.error]} />
+                                        <FieldError className="font-outfit" errors={[fieldState.error]} />
                                     )}
                                 </Field>
                             )}
                         />
-                        <Button type="submit" className='w-full' disabled={isSubmitting}>
+                        <Button type="submit" className='w-full font-outfit' disabled={isSubmitting}>
                             {isSubmitting ? (
                                 <>
                                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -164,9 +166,9 @@ function page() {
                     </FieldGroup>
                 </form>
                 <div className="text-center mt-4">
-                    <p>
-                        Already a member?{' '}
-                        <Link href="/sign-in" className="text-blue-600 hover:text-blue-800">
+                    <p className="font-outfit">
+                        Already a member?
+                        <Link href="/sign-in" className="text-blue-600 hover:text-blue-800 font-outfit">
                             Sign in
                         </Link>
                     </p>
