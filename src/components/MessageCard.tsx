@@ -23,6 +23,7 @@ import { toast } from "sonner"
 import { Button } from "./ui/button"
 import { Message } from "@/models/user.model"
 import { X } from "lucide-react"
+import dayjs from "dayjs"
 
 type MessageCardProps = {
     message: Message;
@@ -48,28 +49,33 @@ function MessageCard({ message, onMessageDelete }: MessageCardProps) {
     return (
         <Card className="card-bordered">
             <CardHeader>
-                <CardDescription>Card Description</CardDescription>
-                <Dialog>
-                    <DialogTrigger>
-                        <Button variant="destructive"> <X /></Button>
-                    </DialogTrigger>
-                    <DialogContent>
-                        <DialogHeader>
-                            <DialogTitle>Are you absolutely sure?</DialogTitle>
-                            <DialogDescription>
-                                This action cannot be undone. This will permanently delete your account
-                                and remove your data from our servers.
-                            </DialogDescription>
-                        </DialogHeader>
-                        <DialogFooter>
-                            <DialogClose>
-                                <Button variant="outline" type="submit" onClick={deleteHandler}>
-                                    Delete
-                                </Button>
-                            </DialogClose>
-                        </DialogFooter>
-                    </DialogContent>
-                </Dialog>
+                <div className="flex justify-between items-center">
+                    <CardDescription>{message.content}</CardDescription>
+                    <Dialog>
+                        <DialogTrigger>
+                            <Button variant="destructive"> <X /></Button>
+                        </DialogTrigger>
+                        <DialogContent>
+                            <DialogHeader>
+                                <DialogTitle>Are you absolutely sure?</DialogTitle>
+                                <DialogDescription>
+                                    This action cannot be undone. This will permanently delete your account
+                                    and remove your data from our servers.
+                                </DialogDescription>
+                            </DialogHeader>
+                            <DialogFooter>
+                                <DialogClose>
+                                    <Button variant="outline" type="submit" onClick={deleteHandler}>
+                                        Delete
+                                    </Button>
+                                </DialogClose>
+                            </DialogFooter>
+                        </DialogContent>
+                    </Dialog>
+                </div>
+                <div className="text-sm">
+                    {dayjs(message.createdAt).format(`MMM D, YYYY h:mm A`)}
+                </div>
             </CardHeader>
         </Card >
     )
