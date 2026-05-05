@@ -22,7 +22,7 @@ export const verifyCode = z.object({
 })
 
 export const acceptingMessageSchema = z.object({
-    acceptMessage: z.boolean()
+    acceptMessages: z.boolean()
 })
 
 export const messageSchemaValidation = z.object({

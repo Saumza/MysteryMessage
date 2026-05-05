@@ -25,7 +25,7 @@ export interface User extends Document {
     verifyCode: string,
     verifyCodeExpiry: Date,
     isVerified: boolean,
-    isAcceptingMessage: boolean,
+    isAcceptingMessages: boolean,
     message: Message[]  // this means the array type will be the Message type
 }
 
@@ -59,7 +59,7 @@ const userSchema: Schema<User> = new Schema({
         required: [true, "Is Verified is needed"],
         default: false
     },
-    isAcceptingMessage: {
+    isAcceptingMessages: {
         type: Boolean,
         required: [true, "Is Accepting Message is needed"],
         default: true

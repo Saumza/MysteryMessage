@@ -34,10 +34,10 @@ export async function POST(req: Request) {
             const codeError = z.treeifyError(result.error)
             return Response.json({
                 success: false,
-                message: codeError.properties?.acceptMessage?.errors || "Invalid Code Format"
+                message: codeError.properties?.acceptMessages?.errors || "Invalid Code Format"
             }, { status: 400 })
         }
-        
+
         const updateUserMessageAcceptance = await UserModel.findByIdAndUpdate(
             userId,
             {
@@ -57,7 +57,7 @@ export async function POST(req: Request) {
         return Response.json({
             success: true,
             message: "Successfully Updated User's Message Acceptance Status",
-            isAcceptingMessage: updateUserMessageAcceptance
+            isAcceptingMessages: updateUserMessageAcceptance.isAcceptingMessages
         },
             {
                 status: 201
@@ -104,7 +104,7 @@ export async function GET(req: Request) {
         return Response.json({
             success: true,
             message: "User Status Fetched Successfully",
-            isAcceptingMessage: foundUser.isAcceptingMessage
+            isAcceptingMessages: foundUser.isAcceptingMessages
         },
             {
                 status: 201

@@ -27,7 +27,7 @@ import dayjs from "dayjs"
 
 type MessageCardProps = {
     message: Message;
-    onMessageDelete: (messageId: string) => void;
+    onMessageDelete: (messageId: Object) => void;
 };
 
 function MessageCard({ message, onMessageDelete }: MessageCardProps) {
@@ -37,7 +37,7 @@ function MessageCard({ message, onMessageDelete }: MessageCardProps) {
             toast.success("Feedback Deleted", {
                 description: response.data.message
             })
-            onMessageDelete(message._id.toString())
+            onMessageDelete(message._id)
         } catch (error) {
             const axiosError = error as AxiosError<APIResponse>
             toast.error("Error", {
