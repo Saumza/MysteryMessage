@@ -27,7 +27,7 @@ function dashboard() {
 
     const { data: session } = useSession()
 
-    const { register, handleSubmit, watch, setValue } = form
+    const { register, watch, setValue } = form
 
     const acceptMessages = watch('acceptMessages')
 
