@@ -41,6 +41,7 @@ function page() {
       toast.error("Login Failed", {
         description: response.error
       })
+      setIsSubmitting(false)
     }
     if (response?.url) {
       setIsSubmitting(false)

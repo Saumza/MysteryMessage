@@ -9,6 +9,7 @@ export async function GET(req: Request) {
 
     const session = await getServerSession(authOptions)
     if (!session || !session.user) {
+        
         return Response.json({
             success: false,
             message: "Session Unavailable. Please LoginIn First"
@@ -22,7 +23,7 @@ export async function GET(req: Request) {
     try {
         const user = await UserModel.aggregate([
             {
-                $match: userId
+                $match: { _id: userId }
             },
             {
                 $unwind: '$message'
@@ -52,7 +53,7 @@ export async function GET(req: Request) {
                 message: "User Doesn't Have Any Messages"
             },
                 {
-                    status: 401
+                    status: 404
                 })
         }
         return Response.json({

@@ -27,6 +27,7 @@ function dashboard() {
     })
 
     const { data: session } = useSession()
+    const user: User = session?.user as User
 
     const { register, watch, setValue } = form
 
@@ -64,7 +65,8 @@ function dashboard() {
         } catch (error) {
             const axiosError = error as AxiosError<APIResponse>
             toast.error('Failed To Fetch Messages', {
-                description: axiosError.response?.data.message
+                description: axiosError.response?.data.message,
+                richColors: true
             })
         } finally {
             setIsLoading(false)
@@ -81,25 +83,29 @@ function dashboard() {
 
     const handleSwitchChange = async () => {
         setSwitchLoading(true)
+        console.log(acceptMessages);
+
         try {
-            const response = await axios.post<APIResponse>('/api/accept-message', {
+            const response = await axios.post<APIResponse>('/api/accept-messages', {
                 acceptMessage: !acceptMessages
             })
             setValue('acceptMessages', !acceptMessages)
-            toast.success(response.data.message)
+            toast.success(response.data.message, {
+                richColors: true
+            })
         } catch (error) {
             const axiosError = error as AxiosError<APIResponse>
             toast.error('Failed To Update Accept Message Status', {
-                description: axiosError.response?.data.message
+                description: axiosError.response?.data.message,
+                richColors: true
             })
         } finally {
             setSwitchLoading(false)
         }
     }
 
-    const { username }: User = session?.user as User
-    const baseURL = `${window.location.protocol}://${window.location.host}/`
-    const userURL = `${baseURL}/u/${username}`
+    const baseURL = `${window.location.protocol}://${window.location.host}`
+    const userURL = `${baseURL}/u/${user?.username}`
 
     const copyToClipboard = () => {
         window.navigator.clipboard.writeText(userURL)
@@ -111,7 +117,7 @@ function dashboard() {
     }
 
     return (
-        <div className="my-8 mx-4 md:mx-8 lg:mx-auto p-6 bg-white rounded w-full max-w-6xl">
+        <div className="my-8 mx-4 md:mx-8 lg:mx-auto p-6 bg-white rounded w-full max-w-6xl font-outfit">
             <h1 className="text-4xl font-bold mb-4">User Dashboard</h1>
 
             <div className="mb-4">
@@ -121,7 +127,7 @@ function dashboard() {
                         type="text"
                         value={userURL}
                         disabled
-                        className="input input-bordered w-full p-2 mr-2"
+                        className="input input-bordered w-full p-2 pl-4 mr-2 border rounded-xl border-black"
                     />
                     <Button onClick={copyToClipboard}>Copy</Button>
                 </div>
