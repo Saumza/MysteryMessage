@@ -164,7 +164,7 @@ function dashboard() {
                 {messages.length > 0 ? (
                     messages.map((message, index) => (
                         <MessageCard
-                            key={message._id.toString()}
+                            key={index}
                             message={message}
                             onMessageDelete={handleDelete}
                         />

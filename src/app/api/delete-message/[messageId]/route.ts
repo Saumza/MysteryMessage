@@ -6,10 +6,11 @@ import mongoose from "mongoose";
 import { success } from "zod";
 
 
-export async function DELETE(req: Request, { params }: { params: { messageId: string } }) {
+export async function DELETE(req: Request, { params }: { params: Promise<{ messageId: string }> }) {
     await connectDB()
 
-    const { messageId } = params
+    const { messageId } = await params
+    console.log(messageId)
 
     const session = await getServerSession(authOptions)
     const user: User = session?.user as User

@@ -52,20 +52,20 @@ function MessageCard({ message, onMessageDelete }: MessageCardProps) {
                 <div className="flex justify-between items-center">
                     <CardDescription>{message.content}</CardDescription>
                     <Dialog>
-                        <DialogTrigger>
+                        <DialogTrigger asChild>
                             <Button variant="destructive"> <X /></Button>
                         </DialogTrigger>
                         <DialogContent>
                             <DialogHeader>
-                                <DialogTitle>Are you absolutely sure?</DialogTitle>
-                                <DialogDescription>
+                                <DialogTitle className="font-outfit">Are you absolutely sure?</DialogTitle>
+                                <DialogDescription className="font-outfit">
                                     This action cannot be undone. This will permanently delete your account
                                     and remove your data from our servers.
                                 </DialogDescription>
                             </DialogHeader>
                             <DialogFooter>
-                                <DialogClose>
-                                    <Button variant="outline" type="submit" onClick={deleteHandler}>
+                                <DialogClose asChild>
+                                    <Button variant="outline" type="submit" onClick={deleteHandler} className="font-outfit">
                                         Delete
                                     </Button>
                                 </DialogClose>
