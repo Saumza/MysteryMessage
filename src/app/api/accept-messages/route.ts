@@ -26,7 +26,7 @@ export async function POST(req: Request) {
         const { acceptMessage } = await req.json()
 
         const acceptMessageSchemaQuery = {
-            acceptMessage
+            acceptMessages: acceptMessage
         }
 
         const result = acceptingMessageSchema.safeParse(acceptMessageSchemaQuery)
