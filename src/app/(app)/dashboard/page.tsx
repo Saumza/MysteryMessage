@@ -21,6 +21,7 @@ function dashboard() {
     const [messages, setMessages] = useState<Message[]>([])
     const [isLoading, setIsLoading] = useState(false)
     const [switchLoading, setSwitchLoading] = useState(false)
+    const [userURL, setUserURL] = useState('')
 
     const form = useForm<z.infer<typeof acceptingMessageSchema>>({
         resolver: zodResolver(acceptingMessageSchema)
@@ -28,6 +29,19 @@ function dashboard() {
 
     const { data: session } = useSession()
     const user: User = session?.user as User
+
+    useEffect(() => {
+        const baseURL = `${window.location.protocol}://${window.location.host}`
+        setUserURL(`${baseURL}/u/${user?.username}`)
+    }, [session?.user])
+
+    const copyToClipboard = () => {
+        window.navigator.clipboard.writeText(userURL)
+        toast('URL Copied!', {
+            description: 'Profile URL has been copied to clipboard.',
+            richColors: true
+        });
+    }
 
     const { register, watch, setValue } = form
 
@@ -104,12 +118,7 @@ function dashboard() {
         }
     }
 
-    const baseURL = `${window.location.protocol}://${window.location.host}`
-    const userURL = `${baseURL}/u/${user?.username}`
 
-    const copyToClipboard = () => {
-        window.navigator.clipboard.writeText(userURL)
-    }
 
 
     if (!session || !session.user) {
