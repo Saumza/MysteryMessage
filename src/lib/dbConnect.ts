@@ -11,6 +11,7 @@ const connection: connectionObject = {}
 export const connectDB = async (): Promise<void> => {
     if (connection.isConnected) {
         console.log("Database is already connected");
+        return
     }
 
     try {
